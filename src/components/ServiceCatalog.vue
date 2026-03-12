@@ -3,17 +3,18 @@ import { ref } from 'vue';
 
 const catalogs = ref([
   {
-    title: 'Hardware & OS Integration',
+    title: 'Hardware & System Optimization',
     category: 'Node: Hardware',
-    image: 'https://picsum.photos/seed/pc/800/1000',
-    shortDesc: 'Rakit PC Custom, Perawatan Bare-Metal, dan Hardening OS.',
-    fullDesc: 'Layanan fisik mencakup perakitan PC High-End untuk kebutuhan workstation, rendering 3D, gaming, hingga server korporat. Kami menjamin manajemen kabel presisi tingkat militer. Kami juga menangani pembersihan debu level komponen mikron, penggantian thermal paste premium (liquid metal), instalasi ulang OS bebas bloatware, hingga penyelamatan data kritis dari hard drive yang terinfeksi ransomware.',
-    tools: ['Thermal Grizzly', 'Windows Server', 'Linux Kernel', 'Data Recovery Tool', 'Custom Liquid Cooling']
+    // Ini yang menggunakan video
+    video: '/rp.mp4', 
+    shortDesc: 'Perakitan PC Custom, Maintenance Komponen, dan Optimalisasi Sistem Windows.',
+    fullDesc: 'Layanan mencakup perakitan PC dari nol untuk kebutuhan gaming, desain, hingga workstation dengan fokus pada manajemen kabel (cable management) yang rapi dan sirkulasi udara maksimal. Kami juga melayani pemeliharaan fisik rutin (deep cleaning & thermal repasting), upgrade komponen kritis (SSD/RAM), hingga instalasi ulang (clean install) OS Windows tanpa bloatware untuk memastikan performa PC atau laptop Anda kembali kencang seperti baru.',
+    tools: ['Windows 10/11', 'Thermal Repasting', 'Component Upgrades', 'Cable Management', 'System Tweaking']
   },
   {
     title: 'App Ecosystem & IoT',
     category: 'Node: Software',
-    image: 'https://picsum.photos/seed/code/800/1000',
+    image: '/aliwebappiotdev.jpeg',
     shortDesc: 'Pembuatan Web Enterprise (Laravel), App Mobile (Flutter) & Node IoT.',
     fullDesc: 'Kami membangun arsitektur perangkat lunak dari hulu ke hilir. Backend API berkinerja tinggi menggunakan framework Laravel untuk menangani puluhan ribu request konkuren, dipadukan dengan aplikasi mobile lintas platform berbasis Flutter yang smooth (60fps). Di ranah interaksi fisik, kami membuat prototipe IoT cerdas menggunakan mikrokontroler ESP32/Arduino untuk mengotomatisasi proses bisnis Anda, seperti smart farming, monitoring suhu, atau smart home terpadu.',
     tools: ['Flutter / Dart', 'Laravel 10 / PHP 8', 'ESP32 / Arduino', 'Firebase / Supabase', 'RESTful API']
@@ -21,7 +22,7 @@ const catalogs = ref([
   {
     title: 'Network & Cyber Security',
     category: 'Node: Network',
-    image: 'https://picsum.photos/seed/network/800/1000',
+    image: 'rd2.jpeg',
     shortDesc: 'Infrastruktur Fiber, Mikrotik/Cisco, dan Hardening Server.',
     fullDesc: 'Membangun "jalan tol" digital berkecepatan tinggi tanpa bottleneck untuk instansi Anda. Layanan ini mencakup penarikan kabel LAN/Fiber Optic skala gedung secara terstruktur. Konfigurasi router tingkat lanjut (MikroTik/Cisco) untuk load balancing multi-ISP dan pembagian bandwidth yang adil (QoS). Di sisi keamanan siber, kami melakukan setup Firewall ketat, enkripsi VPN untuk remote working, serta hardening pada Web Server untuk mencegah serangan DDoS dan injeksi kode.',
     tools: ['MikroTik RouterOS', 'Cisco IOS Switching', 'Fiber Splicing', 'Kali Linux (Pentest)', 'IPsec VPN']
@@ -53,7 +54,9 @@ const closeModal = () => {
              class="card-3d-wrap cursor-none animate-fadeInUp opacity-0" :class="`delay-${(idx+1)*100}`" style="animation-fill-mode: forwards;">
           
           <div class="card-3d relative rounded-2xl overflow-hidden glass-panel h-[420px] group border border-slate-200 dark:border-slate-800 transition-all hover:border-cyan-500/50">
-            <img :src="cat.image" class="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 pointer-events-none" />
+            
+            <video v-if="cat.video" :src="cat.video" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 pointer-events-none"></video>
+            <img v-else :src="cat.image" class="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 pointer-events-none" />
             
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/20 dark:from-slate-950 dark:via-slate-950/80 dark:to-transparent"></div>
             
@@ -62,7 +65,7 @@ const closeModal = () => {
             <div class="absolute bottom-0 left-0 right-0 p-8 flex flex-col h-full justify-end z-10">
               <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{{ cat.category }}</span>
               <h3 class="text-2xl font-serif font-bold text-white mb-3 tracking-tight transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{{ cat.title }}</h3>
-              <p class="text-slate-300 text-sm mb-6 leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100 line-clamp-2">{{ cat.shortDesc }}</p>
+              <p class="text-slate-300 text-sm mb-6 leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100 line-clamp-2 text-justify">{{ cat.shortDesc }}</p>
               
               <div class="inline-flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-5 py-2.5 rounded-full group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-colors shadow-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-500 delay-150 self-start">
                 Ekstrak Detail <span class="ml-2 text-sm">⎋</span>
@@ -92,14 +95,16 @@ const closeModal = () => {
                       <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                       {{ activeService.category }}
                     </div>
-                    <img :src="activeService.image" class="object-cover w-full h-full opacity-90 dark:opacity-70 group-hover:scale-105 transition-transform duration-1000" />
+                    
+                    <video v-if="activeService.video" :src="activeService.video" autoplay loop muted playsinline class="object-cover w-full h-full opacity-90 dark:opacity-70 group-hover:scale-105 transition-transform duration-1000"></video>
+                    <img v-else :src="activeService.image" class="object-cover w-full h-full opacity-90 dark:opacity-70 group-hover:scale-105 transition-transform duration-1000" />
                   </div>
 
                   <div class="p-8 md:p-14 md:w-[60%] text-slate-800 dark:text-slate-300 flex flex-col justify-center">
                     
                     <h3 class="text-4xl sm:text-5xl font-serif font-bold mb-8 text-slate-950 dark:text-white leading-tight tracking-tight mt-4 md:mt-0">{{ activeService.title }}</h3>
                     
-                    <p class="text-base sm:text-lg leading-relaxed mb-12 text-slate-700 dark:text-slate-400 font-medium border-l-4 border-cyan-500 pl-6 bg-slate-200/50 dark:bg-slate-900/50 py-4 rounded-r-xl">
+                    <p class="text-base sm:text-lg leading-relaxed mb-12 text-slate-700 dark:text-slate-400 font-medium border-l-4 border-cyan-500 pl-6 bg-slate-200/50 dark:bg-slate-900/50 py-4 rounded-r-xl text-justify">
                       {{ activeService.fullDesc }}
                     </p>
                     
@@ -130,6 +135,12 @@ const closeModal = () => {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+.font-keren {
+  font-family: 'Playfair Display', serif;
+}
+
 /* Scrollbar khusus untuk modal */
 .custom-scrollbar::-webkit-scrollbar { width: 5px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: rgba(10, 15, 28, 0.8); border-radius: 10px; }
